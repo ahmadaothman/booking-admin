@@ -71,6 +71,15 @@
                                 <span class="text-danger font-weight-bold">* {{ $message }}</span>
                             @enderror
                         </div>
+                        <div class="col-sm-1 col-md-1">
+                            Airport
+                            @if (isset($trip->is_airport) && $trip->is_airport)
+                            <input type="checkbox" name="is_airport" id="is_airport" value="Ariport" checked/>
+                            @else
+                            <input type="checkbox" name="is_airport" id="is_airport" value="Ariport"/>
+                            @endif
+                           
+                        </div>
                     </div>
                     <hr/>
                     <div class="container">

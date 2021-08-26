@@ -75,7 +75,8 @@ class TripController extends Controller
                 'country'       =>  $request->input('country'),
                 'from_location' =>  $request->input('from_location'),
                 'to_location'   =>  $request->input('to_location'),
-                'updated_at'    =>   now()
+                'is_airport'    =>  $request->input('is_airport') ? true : false,
+                'updated_at'    =>  now()
             ];
 
             if($request->path() == 'trips/add'){
@@ -116,6 +117,14 @@ class TripController extends Controller
                 return redirect('/trips')->with('status', '<strong>Success:</strong> New Trip Added!');
 
             }else if($request->path() == 'trips/edit'){
+                $trip_data = [
+                    'country'       =>  $request->input('country'),
+                    'from_location' =>  $request->input('from_location'),
+                    'to_location'   =>  $request->input('to_location'),
+                    'is_airport'    =>  $request->input('is_airport') ? true : false,
+                    'updated_at'    =>  now()
+                ];
+                
                 Trip::where('id',$request->get('id'))->update($trip_data);
 
                 DB::table('trip_vehicle_pricing')->where('trip_id',$request->get('id'))->delete();
