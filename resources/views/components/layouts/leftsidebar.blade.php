@@ -1,7 +1,7 @@
 <div class="left-side-bar">
     <div class="brand-logo">
         <a href="{{ url('/') }}">
-            <img src="{{ asset('/vendors/images/deskapp-logo.png') }}" alt="">
+            <img style="max-height:70px" src="{{ asset('/images/logo.png') }}" alt="">
         </a>
     </div>
     <div class="menu-block customscroll">
