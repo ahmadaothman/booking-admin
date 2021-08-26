@@ -33,7 +33,7 @@
                 </li>
                  <!-- Trip Booking-->
                  <li>
-                    <a href="/hotels" class="dropdown-toggle no-arrow">
+                    <a href="/booking/trips/list" class="dropdown-toggle no-arrow">
                         <i class="icon-copy fa fa-bookmark" aria-hidden="true"></i><span class="mtext">Trip Booking</span>
                     </a>
                 </li>

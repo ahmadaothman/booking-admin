@@ -6,6 +6,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TripController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\TripBookingController;
+
 
 
 Auth::routes();
@@ -46,5 +48,13 @@ Route::get('/booking/edit', [BookingController::class, 'form'])->name('EditBooki
 Route::post('/booking/add', [BookingController::class, 'form'])->name('AddBooking');
 Route::post('/booking/edit', [BookingController::class, 'form'])->name('EditBooking');
 Route::post('/booking/remove', [BookingController::class, 'remove'])->name('removeBooking');
+
+// Booking
+Route::get('/booking/trips/list', [TripBookingController::class, 'index'])->name('Tripbooking');
+Route::get('/booking/trips/add', [TripBookingController::class, 'form'])->name('AddTripBooking');
+Route::get('/booking/trips/edit', [TripBookingController::class, 'form'])->name('EditTripBooking');
+Route::post('/booking/trips/add', [TripBookingController::class, 'form'])->name('AddTripBooking');
+Route::post('/booking/trips/edit', [TripBookingController::class, 'form'])->name('EditTripBooking');
+Route::post('/booking/trips/remove', [TripBookingController::class, 'remove'])->name('removeTripBooking');
 
 
