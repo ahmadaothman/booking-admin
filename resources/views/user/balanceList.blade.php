@@ -16,7 +16,7 @@
                     </nav>
                 </div>
                 <div class="col-md-6 col-sm-12 text-right">
-                    <a type="button" class="btn btn-primary " href="/users/balance/add?user_type_id={{ app('request')->input('user_id') }}"><i class="icon-copy fi-plus"></i> Add Balance</a>
+                    <a type="button" class="btn btn-primary " href="/users/balance/add?user_id={{ app('request')->input('user_id') }}"><i class="icon-copy fi-plus"></i> Add Balance</a>
                 </div>
             </div>
         </div>
@@ -45,12 +45,12 @@
                         <tr>
                             <th class="table-plus datatable-nosort"><input id="select-all" type="checkbox"/></th>
                             <th class="table-plus datatable-nosort">ID</th>
-                            <th class="table-plus datatable-nosort">Balance</th>
+                            <th class="table-plus datatable-nosort">Description</th>
+                            <th class="table-plus datatable-nosort text-center">Balance</th>
                             <th class="table-plus datatable-nosort">Action</th>
                        
                             <th class="table-plus datatable-nosort">Created At</th>
                             <th class="table-plus datatable-nosort">Modified At</th>
-                            <th>Action</th>
 
                         </tr>
                     </thead>
@@ -58,16 +58,19 @@
                         @foreach ($balances->items() as $balance)
                             <tr>
                                 <td class="text-center align-middle">
-                                    <input type="checkbox" name="selected[]" value="{{ $balance['id'] }}" />
+                                    <input type="checkbox" name="selected[]" value="{{ $balance->id }}" />
                                 </td>
                                 <td class="text-center align-middle">
-                                    {{ $balance['id'] }}
+                                    {{ $balance->id  }}
                                 </td>
                                 <td class="align-middle">
-                                    {{ $balance['balance'] }}
+                                    {{ $balance->description }}
+                                </td>
+                                <td class="align-middle text-center">
+                                    {{ $balance->balance }}
                                 </td>
                               
-                                @if($balance['action'] == '+')
+                                @if($balance->action == '+')
                                 <td class="text-center align-middle text-success">
                                     <i class="icon-copy fa fa-arrow-circle-down" aria-hidden="true"></i>
                                 </td>
@@ -78,14 +81,12 @@
                                 @endif
                           
                                 <td class="align-middle">
-                                    {{ $balance['created_at'] }}
+                                    {{ $balance->created_at }}
                                 </td>
                                 <td class="align-middle">
-                                    {{ $balance['updated_at'] }}
+                                    {{ $balance->updated_at }}
                                 </td>
-                                <td class="text-center align-middle">
-                                    <a href="{{ route('editUserBalance',['id' => $user['id'],'user_id'=>app('request')->input('user_id')]) }}" data-toggle="tooltip" data-placement="top" title="Edit"><i class="icon-copy fa fa-edit" aria-hidden="true"></i> Edit</a>
-                                </td>
+                        
                             </tr>
                         @endforeach
                     </tbody>

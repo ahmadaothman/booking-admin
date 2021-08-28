@@ -9,14 +9,14 @@
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">User</li>
+                            <li class="breadcrumb-item active" aria-current="page">Balance</li>
                         </ol>
                     </nav>
                 </div>
                 <div class="col-md-6 col-sm-12 text-right">
                     <button type="submit" class="btn btn-primary " onclick="event.preventDefault();
                     document.getElementById('user-form').submit();"><i class="icon-copy fi-save"></i> Save</button>
-                    <a type="submit" class="btn btn-secondary text-white" ><i class="icon-copy fi-x"></i> Cancel</a>
+                    <a href="{{ route('userBalance') }}" type="submit" class="btn btn-secondary text-white" ><i class="icon-copy fi-x"></i> Cancel</a>
 
                 </div>
             </div>
@@ -25,89 +25,35 @@
         <div class="pd-20 bg-white border-radius-4 box-shadow mb-30">
             <div class="clearfix mb-20">
                 <div class="pull-left">
-                    <h5 class="text-blue">User Information</h5>
+                    <h5 class="text-blue">Add New Balance</h5>
                 </div>
             </div>
             <div class="container">
                
                 <form id="user-form" action="{{ $action }}" method="POST" >
                     @csrf
+                    <input type="hidden" name="user_id" value="{{ $user_id }}" />
                     <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Name</label>
+                        <label class="col-sm-12 col-md-2 col-form-label">Balance*</label>
                         <div class="col-sm-12 col-md-10">
-                            <input class="form-control" name="name" type="text" placeholder="User Name" value="{{ isset($user->name) ? $user->name :  old('name') }}">
+                            <input class="form-control" name="balance" type="text" placeholder="Balance" required value="{{ old('name') }}">
                            
-                            @error('name')
-                                <span class="text-danger font-weight-bold">* {{ $message }}</span>
-                            @enderror
-                        </div>
-                    
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Email</label>
-                        <div class="col-sm-12 col-md-10">
-                            <input class="form-control" name="email" placeholder="User Email" type="email" value="{{ isset($user->email) ? $user->email :  old('email') }}">
-                            @error('email')
-                                <span class="text-danger font-weight-bold">* {{ $message }}</span>
-                            @enderror
-                        </div>
-                       
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Password</label>
-                        <div class="col-sm-12 col-md-10">
-                            <input class="form-control" name="password" placeholder="Password" type="password" value="{{ isset($user->password) ? $user->password :  old('password') }}">
-                            @error('password')
-                                <span class="text-danger font-weight-bold">* {{ $message }}</span>
-                            @enderror
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Telephone</label>
-                        <div class="col-sm-12 col-md-10">
-                         
-                            <input class="form-control" id="telephone" name="telephone" placeholder="1-(111)-111-1111" type="tel" value="{{ isset($user->telephone) ? $user->telephone :  old('telephone') }}">
-                            
-                            @error('telephone')
+                            @error('balance')
                                 <span class="text-danger font-weight-bold">* {{ $message }}</span>
                             @enderror
                         </div>
                     </div>
 
-                    @if ($is_private_user)
-                         <div class="form-group row">
-                            <label class="col-sm-12 col-md-2 col-form-label">Balance</label>
-                            <div class="col-sm-12 col-md-10">
-                            
-                                <input class="form-control" id="balance" name="balance" placeholder="Balance" type="tel" value="{{ isset($user->balance) ? $user->balance :  old('balance',0) }}">
-                                
-                                @error('balance')
-                                    <span class="text-danger font-weight-bold">* {{ $message }}</span>
-                                @enderror
-                            </div>
-                        </div>
-                    @endif
-          
                     <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Status</label>
+                        <label class="col-sm-12 col-md-2 col-form-label">Note</label>
                         <div class="col-sm-12 col-md-10">
-                            <div class="d-none">
-                                {{ isset($user->status) ? $status = $user->status :  $status = old('status',1) }}
-                            </div>
-                            <select class="form-control" name="status">
-                                @if ($status == 1)
-                                    <option value="1" selected="selected">Enabled</option>
-                                    <option value="0" >Disabled</option>
-                                @else
-                                    <option value="1" >Enabled</option>
-                                    <option value="0" selected="selected">Disabled</option>
-                                @endif
-                              
-                            </select>
+                            <input class="form-control" name="note" type="text" placeholder="Note" value="{{ old('note') }}">
+                           
+                            @error('note')
+                                <span class="text-danger font-weight-bold">* {{ $message }}</span>
+                            @enderror
                         </div>
                     </div>
-
-             
                   
                 </form>
 							

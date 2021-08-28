@@ -190,6 +190,39 @@ class UserController extends Controller
     }
 
     public function balanceForm(Request $request){
+        $data = array();
+        $data['action'] = route('addUserBalance');
+        $data['user_id'] = $request->get('user_id');
+
+        if($request->method() == 'POST'){
+            $validation_data =  array();
+            $validation_data['balance'] = 'required';
+
+            $validated = $request->validate($validation_data);
+
+            $note = !empty($request->input('note')) ?  ', ' . $request->input('note') : '';
+
+            DB::table('user_balance')->insert(
+                [
+                    'user_id'       =>  $request->input('user_id'),
+                    'balance'       =>  $request->input('balance'),
+                    'description'   =>  'New Balance Added' . $note,
+                    'action'        =>  '+'
+                ]
+            );
+
+            $user = User::where('id',$request->input('user_id'))->first();
+            $balance = $user->balance;
+            $new_balance = (double)$balance + (double)$request->input('balance');
+
+            User::where('id',$request->input('user_id'))->update(['balance'=>$new_balance]);
+
+
+            return redirect()->route('userBalance',  ['user_id'=>$request->input('user_id')])->with('status', '<strong>Success:</strong> New balance added for user!');
+
+        }
+
+
         return view('user.balanceForm',$data);
     }
 }
