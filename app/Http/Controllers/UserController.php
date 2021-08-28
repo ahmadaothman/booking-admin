@@ -183,7 +183,10 @@ class UserController extends Controller
         $balance = DB::table('user_balance')
           
             ->where('user_id',$request->get('user_id'));
-    
+        
+        $user = User::where('id',$request->get('user_id'))->first();
+
+        $data['user'] = $user;
 
         $data['balances'] = $balance->paginate(15);
         return view('user.balanceList',$data);
@@ -193,6 +196,10 @@ class UserController extends Controller
         $data = array();
         $data['action'] = route('addUserBalance');
         $data['user_id'] = $request->get('user_id');
+
+        $user = User::where('id',$request->get('user_id'))->first();
+        
+        $data['user'] = $user;
 
         if($request->method() == 'POST'){
             $validation_data =  array();

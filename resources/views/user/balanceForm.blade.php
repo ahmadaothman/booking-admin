@@ -5,7 +5,9 @@
         <div class="page-header">
             <div class="row">
                 <div class="col-md-6 col-sm-12">
-                  
+                    <div class="title">
+                        <h4><i class="icon-copy fa fa-group" aria-hidden="true"></i> Add Balance For <strong>{{ $user->name}}</strong></h4>
+                    </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="index.php">Home</a></li>
