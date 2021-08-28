@@ -55,7 +55,7 @@
                                 <!-- from location  -->
                                 {{ isset($trip->from_location) ? $from_location = $trip->from_location :  $from_location = old('from_location') }}
                             </div>
-                            <input type="text" class="form-control" name="from_location" placeholder="From" value="{{ $from_location }}"/>
+                            <input type="text" class="form-control" name="from_location" id="from_location" placeholder="From" autocomplete="off" value="{{ $from_location }}"/>
                             @error('from_location')
                                 <span class="text-danger font-weight-bold">* {{ $message }}</span>
                             @enderror
@@ -66,7 +66,7 @@
                                 <!-- to location  -->
                                 {{ isset($trip->to_location) ? $to_location = $trip->to_location :  $to_location = old('to_location') }}
                             </div>
-                            <input type="text" class="form-control" name="to_location" placeholder="To" value="{{ $to_location }}"/>
+                            <input type="text" class="form-control" name="to_location" id="to_location" placeholder="To" autocomplete="off" value="{{ $to_location }}"/>
                             @error('to_location')
                                 <span class="text-danger font-weight-bold">* {{ $message }}</span>
                             @enderror
@@ -116,5 +116,56 @@
         </div>
     </div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+
+<script type="text/javascript">
+     $('#from_location').typeahead({
+
+        source: function (query, process) {
+            return $.getJSON(
+                "{{ route('search_pickup') }}",
+                {
+                    query: query,
+                    to_location:  $('#to_location').val()
+                },
+                function (data) {
+                    var newData = [];
+
+                    $.each(data, function(){
+
+                        newData.push(this.from_location);
+
+                    });
+
+                    return process(newData);
+                });
+        }
+
+        });
+
+        $('#to_location').typeahead({
+
+        source: function (query, process) {
+            return $.getJSON(
+                "{{ route('searh_destination') }}",
+                {
+                    query: query,
+                    from_location: $('#from_location').val()
+                },
+                function (data) {
+                    var newData = [];
+
+                    $.each(data, function(){
+
+                        newData.push(this.to_location);
+
+                    });
+
+                    return process(newData);
+                });
+        }
+
+        });
+</script>
 
 @endsection

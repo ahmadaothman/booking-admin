@@ -164,4 +164,24 @@ class TripController extends Controller
 
         return redirect('trips')->with('status', '<strong>Success:</strong> ' . $i . ' Trips Removed!');
     }
+
+    public function getPickappLocations(Request $request){
+        $trips = Trip::select('id','from_location')
+        ->where('from_location','LIKE','%' . $request->get('query') . '%')
+        ->where('from_location','!=',$request->get('to_location'))
+        ->skip(0)
+        ->take(15)
+        ->get();
+        return $trips;
+    }
+
+    public function getDestinations(Request $request){
+        $trips = Trip::select('id','to_location')
+        ->where('to_location','LIKE','%' . $request->get('query') . '%')
+        ->where('to_location','!=',$request->get('from_location'))
+        ->skip(0)
+        ->take(15)
+        ->get();
+        return $trips;
+    }
 }
