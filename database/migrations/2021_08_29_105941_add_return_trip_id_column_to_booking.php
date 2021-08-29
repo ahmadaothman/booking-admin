@@ -14,7 +14,7 @@ class AddReturnTripIdColumnToBooking extends Migration
     public function up()
     {
         Schema::table('booking', function (Blueprint $table) {
-            $table->bigInteger('return_trip_id')->nullable();
+            $table->string('email')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddReturnTripIdColumnToBooking extends Migration
     public function down()
     {
         Schema::table('booking', function (Blueprint $table) {
-            $table->dropColumn('return_trip_id');
+            $table->string('email');
         });
     }
 }
