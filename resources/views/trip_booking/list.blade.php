@@ -113,11 +113,9 @@
                               <td>{{ $booking->booking_date }}</td>
                               <td>
                               @if ($booking->status == 1)
-                              <span class="bg-dark p-2 text-white rounded">Pending</span>
-                              @elseif($booking->status == 2)
                               <span class="bg-success p-2 text-white rounded">Approved</span>
-                              @elseif($booking->status == 3)
-                              <span class="bg-danger p-2 text-white rounded">Declined</span>
+                              @elseif($booking->status == 2)
+                              <span class="bg-danger p-2 text-white rounded">Cancelled</span>
                               @endif
                               </td>
                               <td>{{ $booking->created_at }}</td>
