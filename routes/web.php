@@ -58,6 +58,6 @@ Route::get('/booking/trips/add', [TripBookingController::class, 'form'])->name('
 Route::get('/booking/trips/edit', [TripBookingController::class, 'form'])->name('EditTripBooking');
 Route::post('/booking/trips/add', [TripBookingController::class, 'form'])->name('AddTripBooking');
 Route::post('/booking/trips/edit', [TripBookingController::class, 'form'])->name('EditTripBooking');
-Route::post('/booking/trips/remove', [TripBookingController::class, 'remove'])->name('removeTripBooking');
+Route::post('/booking/trips/cancel', [TripBookingController::class, 'cancel'])->name('cancelTripBooking');
 
 

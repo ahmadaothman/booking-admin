@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TripBooking;
 use Illuminate\Support\Facades\DB;
+use PragmaRX\Countries\Package\Countries;
 
 class TripBookingController extends Controller
 {
@@ -51,10 +52,72 @@ class TripBookingController extends Controller
             }
         }
 
-        $data['pessengers'] = DB::table('booking_people')->where('booking_id',$request->get('id'))->first();
+        $data['pessengers'] = DB::table('booking_people')->where('booking_id',$request->get('id'))->get();
         
-        dd($data);
+       // dd($data);
+
+       $countries = new Countries();
+       //dd($countries->all()->toArray());
+       $data['countries'] = $countries->all()->toArray();
+
+       if($request->method() == 'POST'){
+           $booking_data = [
+               'firstname'  =>  $request->input('firstname'),
+               'middlename'  =>  $request->input('middlename'),
+               'lastname'  =>  $request->input('lastname'),
+               'nationality'  =>  $request->input('nationality'),
+               'sex'  =>  $request->input('sex'),
+               'date_of_birthday'  =>  $request->input('date_of_birthday'),
+               'telephone'  =>  $request->input('telephone'),
+               'email'  =>  $request->input('email'),
+               'passport_number'  =>  $request->input('passport_number'),
+               'number_of_people'  =>  $request->input('number_of_people'),
+               'booking_date'  =>  $request->input('booking_date'),
+               'one_way_time'  =>  $request->input('one_way_time'),
+               'trip_number_main'  =>  $request->input('fly_number'),
+               'trip_arrival_time'    =>   $request->input('fly_arrival_time'),
+               'note'    =>   $request->input('note'),
+               'return_date'    =>   $request->input('return_date'),
+               'return_time'    =>   $request->input('return_time'),
+               'return_note'    =>   $request->input('return_note'),
+           ];
+           TripBooking::where('id',$request->get('id'))->update($booking_data);
+           DB::table('booking_people')->where('booking_id',$request->get('id'))->delete();
+           foreach($request->input('pessenger') as $key => $value){
+               $pessenger_data = [
+                   'firstname'          =>  $request->input('pessenger')[$key]['firstname'],
+                   'middlename'         =>  $request->input('pessenger')[$key]['middlename'],
+                   'lastname'           =>  $request->input('pessenger')[$key]['lastname'],
+                   'nationality'        =>  $request->input('pessenger')[$key]['nationality'],
+                   'sex'                =>  $request->input('pessenger')[$key]['sex'],
+                   'passport_number'    =>  'none',
+                   'booking_id'         =>  $request->get('id')
+               ];
+               DB::table('booking_people')->insert($pessenger_data);
+           }
+           return redirect(route('Tripbooking'));
+       }
 
         return view('trip_booking.form',$data);
+    }
+
+    public function cancel(Request $request){
+        $booking = TripBooking::where('id',$request->input('id'))->first();
+        $vehicles =  DB::table('booking_vehicles')->where('booking_id',$request->input('id'))->get();
+
+        $total = 0;
+
+        foreach($vehicles as $vehicle){
+            $total = $total + $vehicle->price;
+        }
+
+        $user = DB::table('users')->where('id',$booking->agent_id)->first();
+        $user_balance = $user->balance + $total;
+
+        DB::table('users')->where('id',$booking->agent_id)->update(['balance'=>$user_balance]);
+
+        TripBooking::where('id',$request->input('id'))->update(['status'=>2]);
+
+        return redirect(route('Tripbooking'));
     }
 }
