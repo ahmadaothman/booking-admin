@@ -28,7 +28,7 @@
                 <!--Trip Pricing-->
                 <li>
                     <a href="/trips" class="dropdown-toggle no-arrow">
-                        <i class="icon-copy fa fa-dollar" aria-hidden="true"></i><span class="mtext">Trips</span>
+                        <i class="icon-copy fa fa-taxi" aria-hidden="true"></i><span class="mtext">Trips</span>
                     </a>
                 </li>
         
@@ -38,22 +38,12 @@
                     </a>
                     <ul class="submenu">
                         <li><a href="/users?user_type_id=1">Admin Users</a></li>
-                        <li><a href="/users?user_type_id=2">Private Users</a></li>
+                        <li><a href="/users?user_type_id=2">Partners</a></li>
                         <li><a href="/users?user_type_id=3">Public Users</a></li>
 
                     </ul>
                 </li>
-                <!--reports-->
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="fa fa-pie-chart"></span><span class="mtext">Reports</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="highchart.php">Highchart</a></li>
-                        <li><a href="knob-chart.php">jQuery Knob</a></li>
-                        <li><a href="jvectormap.php">jvectormap</a></li>
-                    </ul>
-                </li>
+             
                 <!--setting-->
                 <li>
                     <a href="setting" class="dropdown-toggle no-arrow">

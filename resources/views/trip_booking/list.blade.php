@@ -6,7 +6,7 @@
             <div class="row">
                 <div class="col-md-6 col-sm-12">
                     <div class="title">
-                        <h4><i class="icon-copy fa fa-car" aria-hidden="true"></i> Booking</h4>
+                        <h4><i class="icon-copy fa fa-bookmark-o" aria-hidden="true"></i>  Booking</h4>
                     </div>
                     <nav aria-label="breadcrumb" role="navigation">
                         <ol class="breadcrumb">
