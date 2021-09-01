@@ -13,12 +13,7 @@ class ChangeNoteDatatype extends Migration
      */
     public function up()
     {
-        Schema::table('booking', function (Blueprint $table) {
-            $table->string('one_way_pickup_note')->after('note')->nullable()->change();
-            $table->string('one_way_dropoff_note')->after('note')->nullable()->change();
-            $table->string('return_pickup_note')->after('note')->nullable()->change();
-            $table->string('return_dropoff_note')->after('note')->nullable()->change();
-        });
+       
     }
 
     /**
@@ -28,6 +23,6 @@ class ChangeNoteDatatype extends Migration
      */
     public function down()
     {
-        //
+        /
     }
 }
