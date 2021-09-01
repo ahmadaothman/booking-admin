@@ -23,6 +23,6 @@ class ChangeNoteDatatype extends Migration
      */
     public function down()
     {
-        /
+        
     }
 }
