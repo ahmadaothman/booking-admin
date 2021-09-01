@@ -40,7 +40,7 @@
             
            @csrf
             <div class="row">
-                <table class="table table-striped  table-hover  data-table-export table-xs ">
+                <table class="table table-striped  table-hover  data-table-export table-xs " style="font-size: 14px !important">
                     <thead>
                         <tr>
                             <th class="table-plus datatable-nosort"><input id="select-all" type="checkbox"/></th>
@@ -66,8 +66,12 @@
                                 <td class="align-middle">
                                     {{ $balance->description }}
                                 </td>
-                                <td class="align-middle text-center">
-                                    {{ $balance->balance }}
+                                @if($balance->action == '+')
+                                <td class="align-middle text-center text-success">
+                                @else
+                                <td class="align-middle text-center text-danger">
+                                @endif 
+                                    <strong>{{ $balance->action }}{{ $balance->balance }}$</strong>
                                 </td>
                               
                                 @if($balance->action == '+')

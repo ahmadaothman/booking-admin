@@ -7,30 +7,11 @@
     <div class="menu-block customscroll">
         <div class="sidebar-menu">
             <ul id="accordion-menu">
-                <!--dashboard-->
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="fa fa-home"></span><span class="mtext">Home</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="{{ url('/') }}">Dashboard</a></li>
-                        <li><a href="">Statistics</a></li>
-                    </ul>
-                </li>
+        
                
          
-                <!--Hotels-->
-                <li>
-                <a href="/hotels" class="dropdown-toggle no-arrow">
-                    <i class="icon-copy fa fa-hotel" aria-hidden="true"></i><span class="mtext">Hotel</span>
-                </a>
-                </li>
-                <!--Hotel Booking-->
-                <li>
-                    <a href="/hotels" class="dropdown-toggle no-arrow">
-                        <i class="icon-copy fa fa-hotel" aria-hidden="true"></i><span class="mtext">Hotel Booking</span>
-                    </a>
-                </li>
+              
+              
                  <!-- Trip Booking-->
                  <li>
                     <a href="/booking/trips/list" class="dropdown-toggle no-arrow">

@@ -180,9 +180,10 @@ class UserController extends Controller
 
     public function balanceList(Request $request){
         $data = array();
+        
         $balance = DB::table('user_balance')
-          
-            ->where('user_id',$request->get('user_id'));
+            ->where('user_id',$request->get('user_id'))
+            ->orderBy('id','DESC');
         
         $user = User::where('id',$request->get('user_id'))->first();
 

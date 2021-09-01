@@ -51,19 +51,19 @@
             <h4>Contact Info</h4>
             <hr>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-9">
                     <div class="form-group ">
-                        <label for="firstname" >First Name:</label>
+                        <label for="firstname" >Full Name:</label>
                         <input type="text"  class="form-control" id="firstname" name="firstname" value="{{ $booking->firstname }}" />
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 d-none">
                     <div class="form-group ">
                         <label for="middlename" >Middle Name:</label>
                         <input type="text"  class="form-control" id="middlename" name="middlename" value="{{ $booking->middlename }}" />
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 d-none">
                     <div class="form-group ">
                         <label for="lastname" >Last Name:</label>
                         <input type="text"  class="form-control" id="lastname" name="lastname" value="{{ $booking->lastname }}" />
@@ -78,8 +78,8 @@
             </div>
 
             <div class="row">
-                <div class="col-md-3">
-                    <div class="form-group ">
+                <div class="col-md-3 d-none">
+                    <div class="form-group d-none">
                         <label for="sex" >Sex:</label>
                         <input type="text"  class="form-control" id="sex" name="sex" value="{{ $booking->sex }}" />
                     </div>
@@ -96,7 +96,7 @@
                         <input type="text"  class="form-control" id="telephone" name="telephone" value="{{ $booking->telephone }}" />
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="form-group ">
                         <label for="email" >Email:</label>
                         <input type="text"  class="form-control" id="email" name="email" value="{{ $booking->email }}" />
@@ -153,7 +153,7 @@
                         <div class="col-md-6">
                             <div class="form-group ">
                                 <label for="fly_number" >Fly Number:</label>
-                                <input type="text"  class="form-control" id="fly_number" name="one_way_to" value="{{ $booking->trip_number_main }}" />
+                                <input type="text"  class="form-control" id="fly_number" name="fly_number" value="{{ $booking->trip_number_main }}" />
                             </div>
                         </div>
 
@@ -166,10 +166,16 @@
                 </div>
             @endif
             <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                     <div class="form-group ">
-                        <label for="note" >Note:</label>
-                        <input type="text"  class="form-control" id="note" name="note" value="{{ $booking->note }}" />
+                        <label for="one_way_pickup_note" >Pickup location note:</label>
+                        <input type="text"  class="form-control" id="one_way_pickup_note" name="one_way_pickup_note" value="{{ $booking->one_way_pickup_note }}" />
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group ">
+                        <label for="one_way_dropoff_note" >Dropoff location note:</label>
+                        <input type="text"  class="form-control" id="one_way_dropoff_note" name="one_way_dropoff_note" value="{{ $booking->one_way_dropoff_note }}" />
                     </div>
                 </div>
             </div>
@@ -221,12 +227,19 @@
                </div>
            @endif
            <div class="row">
-               <div class="col-md-12">
+               <div class="col-md-6">
                    <div class="form-group ">
-                       <label for="return_note" >Note:</label>
-                       <input type="text"  class="form-control" id="return_note" name="return_note" value="{{ $booking->return_note }}" />
+                       <label for="return_pickup_note" >Pickup location note:</label>
+                       <input type="text"  class="form-control" id="return_pickup_note" name="return_pickup_note" value="{{ $booking->return_pickup_note }}" />
                    </div>
                </div>
+
+               <div class="col-md-6">
+                <div class="form-group ">
+                    <label for="return_dropoff_note" >Dropoff location note:</label>
+                    <input type="text"  class="form-control" id="return_dropoff_note" name="return_dropoff_note" value="{{ $booking->return_dropoff_note }}" />
+                </div>
+            </div>
            </div>
            @endif
            <h4>Vehicles Info</h4>
@@ -240,24 +253,13 @@
                    <td>Max People:</td>
                    <td>{{ $one_way_vehicle->max_people }}</td>
                    <td>Price:</td>
-                   <td>{{ $one_way_price }}$</td>
-                  
+                   @if ($booking->trip_type == 'round')
+                   <td>{{ $one_way_price*2 }}$</td>
+                  @else
+                  <td>{{ $one_way_price }}$</td>
+                  @endif
                </tr>
-               @if ($booking->trip_type == 'round')
-               <tr>
-                <td colspan="8" class="text-center"><strong>Return Vehicle</strong></td>
-               </tr>
-               <tr>
-                <td>Vehicle:</td>
-                <td>{{ $return_vehicle->name }}</td>
-                <td>Description:</td>
-                <td>{{ $return_vehicle->description }}</td>
-                <td>Max People:</td>
-                <td>{{ $return_vehicle->max_people }}</td>
-                <td>Price:</td>
-                <td>{{ $return_price }}$</td>
-               </tr>
-               @endif
+              
            </table>
            <h4>Pessengers Info</h4>
            <hr>
@@ -265,10 +267,7 @@
                <thead>
                    <tr>
                        <th>First Name</th>
-                       <th>Middle Name</th>
-                       <th>Last Name</th>
                        <th>Nationality</th>
-                       <th>Sex</th>
                        <th>Action</th>
                    </tr>
                </thead>
@@ -276,17 +275,14 @@
                    <div class="d-none">
                        {{ $row_count = 0}}
                    </div>
+
                    @foreach ($pessengers as $pessenger)
                        <tr id="pers_row_{{ $row_count }}">
                             <td>
                                 <input class="form-control" name="pessenger[{{ $row_count }}][firstname]" value="{{ $pessenger->firstname }}"/>
                             </td>
-                            <td>
-                                <input class="form-control" name="pessenger[{{ $row_count }}][middlename]" value="{{ $pessenger->middlename }}"/>
-                            </td>
-                            <td>
-                                <input class="form-control" name="pessenger[{{ $row_count }}][lastname]" value="{{ $pessenger->lastname }}"/>
-                            </td>
+                           
+                          
                             <td>
                                 <div class="d-none">
                                     {{ isset($pessenger->nationality) ? $country = $pessenger->nationality :  $country = '' }}
@@ -304,11 +300,9 @@
                                     @endforeach
                                 </select>
                             </td>
-                            <td>       
-                                <input class="form-control" name="pessenger[{{ $row_count }}][sex]" value="{{ $pessenger->sex }}"/>
-                            </td>
+                           
                             <td>
-                                <button class="btn btn-danger" onclick="$('#pers_row_{{ $row_count }}').remove()"><i class="icon-copy fa fa-trash-o" aria-hidden="true"></i></button>
+                                <button type="button" class="btn btn-danger" onclick="$('#pers_row_{{ $row_count }}').remove()"><i class="icon-copy fa fa-trash-o" aria-hidden="true"></i></button>
                             </td>
                        </tr>
                        <div class="d-none">
@@ -318,7 +312,7 @@
                 
                </tbody>
                <tr>
-                    <td colspan="5"></td>
+                    <td colspan="2"></td>
                     <td><button type="button" class="btn btn-primary" onclick="addRow()"><i class="icon-copy fa fa-plus" aria-hidden="true"></i></button></td>
                 </tr>
            </table>
@@ -333,8 +327,6 @@
     function addRow(){
         var html = '<tr id="pers_row_'+row_count+'">'
             html += '<td><input class="form-control" name="pessenger['+row_count+'][firstname]" value=""></td>'
-            html += '<td><input class="form-control" name="pessenger['+row_count+'][middlename]" value=""></td>'
-            html += '<td><input class="form-control" name="pessenger['+row_count+'][lastname]" value=""></td>'
             html += '<td><select class="form-control " name="pessenger['+row_count+'][nationality]" data-live-search="true">'
             "@foreach ($countries as $key => $value)"
                 "@if ((isset($value['name_en']) && !empty($value['name_en'])) && (isset($value['cca2']) && !empty($value['cca2'])))"
@@ -344,7 +336,6 @@
                 "@endif"
             "@endforeach"
             html += '</select></td>'
-            html += '<td><input class="form-control" name="pessenger['+row_count+'][sex]" value=""></td>'
             html += '<td><button class="btn btn-danger" onclick="$(\'#pers_row_'+row_count+'\').remove()"><i class="icon-copy fa fa-trash-o" aria-hidden="true"></i></button></td>'
         html += '</tr>'
         $('#pessengers_tbody').append(html)

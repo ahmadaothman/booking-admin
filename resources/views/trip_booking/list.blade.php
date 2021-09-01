@@ -78,7 +78,7 @@
             </div>
            @csrf
             <div class="row">
-                <table class="table table-striped  table-hover  data-table-export table-xs table-responsive">
+                <table class="table table-striped  table-hover  data-table-export table-xs table-responsive" style="font-size:14px !important;">
                         <thead>
                             <tr>
                                 <th class="table-plus datatable-nosort">ID</th>
@@ -86,9 +86,8 @@
                                 <th class="table-plus datatable-nosort">To</th>
                                 <th class="table-plus datatable-nosort">Trip</th>
                                 <th class="table-plus datatable-nosort">Partner</th>
-                                <th class="table-plus datatable-nosort">First Name</th>
-                                <th class="table-plus datatable-nosort">Middle Name</th>
-                                <th class="table-plus datatable-nosort">Last Name</th>
+                                <th class="table-plus datatable-nosort">Name</th>
+                               
                                 <th class="table-plus datatable-nosort">Telephone</th>
                                 <th class="table-plus datatable-nosort">Booking Date</th>
                                 <th class="table-plus datatable-nosort">Status</th>
@@ -107,8 +106,7 @@
                               <td>{{ $booking->trip_type }}</td>
                               <td>{{ $booking->Partner->name }}</td>
                               <td>{{ $booking->firstname }}</td>
-                              <td>{{ $booking->middlename }}</td>
-                              <td>{{ $booking->lastname }}</td>
+                       
                               <td>{{ $booking->telephone }}</td>
                               <td>{{ $booking->booking_date }}</td>
                               <td>

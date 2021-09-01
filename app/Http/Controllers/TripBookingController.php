@@ -63,10 +63,10 @@ class TripBookingController extends Controller
        if($request->method() == 'POST'){
            $booking_data = [
                'firstname'  =>  $request->input('firstname'),
-               'middlename'  =>  $request->input('middlename'),
-               'lastname'  =>  $request->input('lastname'),
+               'middlename'  =>  'none',
+               'lastname'  =>  'none',
                'nationality'  =>  $request->input('nationality'),
-               'sex'  =>  $request->input('sex'),
+               'sex'  =>  'none',
                'date_of_birthday'  =>  $request->input('date_of_birthday'),
                'telephone'  =>  $request->input('telephone'),
                'email'  =>  $request->input('email'),
@@ -76,20 +76,22 @@ class TripBookingController extends Controller
                'one_way_time'  =>  $request->input('one_way_time'),
                'trip_number_main'  =>  $request->input('fly_number'),
                'trip_arrival_time'    =>   $request->input('fly_arrival_time'),
-               'note'    =>   $request->input('note'),
+               'one_way_pickup_note'    => $request->input('one_way_pickup_note'),
+               'one_way_dropoff_note'    => $request->input('one_way_dropoff_note'),
+               'return_pickup_note'    => $request->input('return_pickup_note'),
+               'return_dropoff_note'    => $request->input('return_dropoff_note'),
                'return_date'    =>   $request->input('return_date'),
                'return_time'    =>   $request->input('return_time'),
-               'return_note'    =>   $request->input('return_note'),
            ];
            TripBooking::where('id',$request->get('id'))->update($booking_data);
            DB::table('booking_people')->where('booking_id',$request->get('id'))->delete();
            foreach($request->input('pessenger') as $key => $value){
                $pessenger_data = [
                    'firstname'          =>  $request->input('pessenger')[$key]['firstname'],
-                   'middlename'         =>  $request->input('pessenger')[$key]['middlename'],
-                   'lastname'           =>  $request->input('pessenger')[$key]['lastname'],
+                   'middlename'         =>  'none',
+                   'lastname'           =>  'none',
                    'nationality'        =>  $request->input('pessenger')[$key]['nationality'],
-                   'sex'                =>  $request->input('pessenger')[$key]['sex'],
+                   'sex'                =>  'none',
                    'passport_number'    =>  'none',
                    'booking_id'         =>  $request->get('id')
                ];
@@ -114,9 +116,17 @@ class TripBookingController extends Controller
         $user = DB::table('users')->where('id',$booking->agent_id)->first();
         $user_balance = $user->balance + $total;
 
+        DB::table('user_balance')->insert([
+            'user_id'       =>  $user->id,
+            'balance'       =>  $total,
+            'action'        =>  '+',
+            'description'   =>  'Booking Number ' . $booking->id . ' Cancelled'
+        ]);
+        
         DB::table('users')->where('id',$booking->agent_id)->update(['balance'=>$user_balance]);
 
         TripBooking::where('id',$request->input('id'))->update(['status'=>2]);
+
 
         return redirect(route('Tripbooking'));
     }
