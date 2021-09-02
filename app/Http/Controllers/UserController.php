@@ -213,9 +213,9 @@ class UserController extends Controller
             DB::table('user_balance')->insert(
                 [
                     'user_id'       =>  $request->input('user_id'),
-                    'balance'       =>  $request->input('balance'),
-                    'description'   =>  'New Balance Added' . $note,
-                    'action'        =>  '+'
+                    'balance'       =>  $request->input('balance') > 0 ? $request->input('balance') : $request->input('balance')*-1,
+                    'description'   =>  $note,
+                    'action'        =>  $request->input('balance') > 0 ? '+' : '-'
                 ]
             );
 

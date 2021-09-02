@@ -91,8 +91,8 @@
                                 <th class="align-middle">Vehicle</th>
                                 <th class="align-middle">Description</th>
                                 <th class="align-middle text-center">Max people</th>
+                                <th class="align-middle">Public Price </th>
                                 <th class="align-middle">Agency Price </th>
-                                <th class="align-middle">Private Price </th>
                             </tr>
                         </thead>
                         <tbody id="tbody">
