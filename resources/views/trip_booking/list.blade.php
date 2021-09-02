@@ -92,7 +92,7 @@
                                 <th class="table-plus datatable-nosort">Booking Date</th>
                                 <th class="table-plus datatable-nosort">Status</th>
                                 <th class="table-plus datatable-nosort">Created At</th>
-                                <th class="table-plus datatable-nosort">Modified At</th>
+                                
                                 <th>Action</th>
 
                             </tr>
@@ -117,7 +117,7 @@
                               @endif
                               </td>
                               <td>{{ $booking->created_at }}</td>
-                              <td>{{ $booking->updated_at }}</td>
+                              
                               <td>
                                 <a href="{{ route('EditTripBooking',['id' => $booking['id']]) }}" data-toggle="tooltip" data-placement="top" title="View"><i class="fa fa-eye" aria-hidden="true"></i> </a>
                               </td>

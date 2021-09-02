@@ -7,6 +7,7 @@ use App\Http\Controllers\TripController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\TripBookingController;
+use App\Http\Controllers\SettingController;
 
 
 
@@ -59,5 +60,8 @@ Route::get('/booking/trips/edit', [TripBookingController::class, 'form'])->name(
 Route::post('/booking/trips/add', [TripBookingController::class, 'form'])->name('AddTripBooking');
 Route::post('/booking/trips/edit', [TripBookingController::class, 'form'])->name('EditTripBooking');
 Route::post('/booking/trips/cancel', [TripBookingController::class, 'cancel'])->name('cancelTripBooking');
+
+Route::post('/setting', [SettingController::class, 'index'])->name('setting');
+Route::get('/setting', [SettingController::class, 'index'])->name('setting');
 
 
