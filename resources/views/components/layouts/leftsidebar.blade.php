@@ -46,7 +46,7 @@
              
                 <!--setting-->
                 <li>
-                    <a href="setting" class="dropdown-toggle no-arrow">
+                    <a href="/setting" class="dropdown-toggle no-arrow">
                         <i class="icon-copy fa fa-cog" aria-hidden="true"></i><span class="mtext">Setting</span>
                     </a>
                 </li>

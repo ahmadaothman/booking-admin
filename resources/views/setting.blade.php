@@ -32,17 +32,12 @@
                 <form id="vehicle-form" action="{{ $action }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Airport Port Number:</label>
+                        <label class="col-sm-12 col-md-2 col-form-label">Note:</label>
                         <div class="col-sm-12 col-md-10">
-                            <input class="form-control" name="airport_port_number" type="text" placeholder="Port Number" value="{{ $airport_port_number ? $airport_port_number :  old('airport_port_number') }}">
+                            <input class="form-control" name="airport_port_number" type="text" placeholder="Note" value="{{ $airport_port_number ? $airport_port_number :  old('airport_port_number') }}">
                         </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-12 col-md-2 col-form-label">Airport Banner Number:</label>
-                        <div class="col-sm-12 col-md-10">
-                            <input class="form-control" name="airport_banner_number" type="text" placeholder="Banner Number" value="{{ $airport_banner_number ? $airport_banner_number :  old('airport_banner_number') }}">
-                        </div>
-                    </div>
+                  
                    
                    
                    
