@@ -81,6 +81,11 @@
                            
                         </div>
                     </div>
+                    <div class="col-md-12" id="airport_note_div" >
+                        <div class="d-none">{{ isset($trip->airport_note) ? $airport_note = $trip->airport_note :  $airport_note = old('airport_note') }}</div>
+                        <label for="airport_note">Airport Note:</label>
+                        <input type="text" class="form-control" name="airport_note" placeholder="Airport Note" id="airport_note" value="{{ $airport_note }}"/>
+                    </div>
                     <hr/>
                     <div class="container">
                         <h5 class="mb-20"><i class="icon-copy fa fa-car" aria-hidden="true"></i> Vehicles</h5>
@@ -167,5 +172,20 @@
 
         });
 </script>
+<script type="text/javascript">
+        '@if($trip->is_airport == 1)'
+            $('#airport_note_div').show();
+        '@else'
+            $('#airport_note_div').hide();
+        '@endif'
 
+    $('#is_airport').change(function() {
+        if(this.checked) {
+            $('#airport_note_div').show();
+        }else{
+            $('#airport_note_div').hide();
+            $('#airport_note_div').val("")
+        }
+    });
+</script>
 @endsection

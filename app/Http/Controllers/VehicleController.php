@@ -144,8 +144,8 @@ class VehicleController extends Controller
         $i = 0;
         if($request->input('selected')){
             foreach($request->input('selected') as $id){
-                Vehicle::where('id', $id)->delete($id);
-    
+                Vehicle::where('id', $id)->update(['status'=>false]);
+                
                 $i = $i +1;
             }
         }

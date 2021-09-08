@@ -23,7 +23,7 @@ class TripController extends Controller
     public function index(Request $request){
         $data = array();
 
-        $trips =  Trip::orderBy('id');
+        $trips =  Trip::where('status',true)->orderBy('id');
 
         $data['trips'] = $trips->paginate(15);
 
@@ -39,13 +39,17 @@ class TripController extends Controller
         $data['countries'] = $countries->all()->toArray();
 
 
-        $vehicles = Vehicle::get();
+        $vehicles = Vehicle::where('status',true)->get();
         $vehicles = $vehicles->toArray();
 
         if($request->path() == 'trips/edit'){
             $data['trip'] = Trip::where('id', $request->get('id'))->first();
 
-            $trip_vehicles = DB::table('trip_vehicle_pricing')->where('trip_id', $request->get('id'))->get();
+            $trip_vehicles = DB::table('trip_vehicle_pricing')
+            ->join('vehicle', 'trip_vehicle_pricing.vehicle_id', '=', 'vehicle.id')
+            ->where('vehicle.status',true)
+            ->where('trip_id', $request->get('id'))->get();
+            
             $trip_vehicles = $trip_vehicles->toArray();
         
 
@@ -76,6 +80,7 @@ class TripController extends Controller
                 'from_location' =>  $request->input('from_location'),
                 'to_location'   =>  $request->input('to_location'),
                 'is_airport'    =>  $request->input('is_airport') ? true : false,
+                'airport_note'  =>  $request->input('airport_note'),
                 'updated_at'    =>  now()
             ];
 
@@ -122,6 +127,7 @@ class TripController extends Controller
                     'from_location' =>  $request->input('from_location'),
                     'to_location'   =>  $request->input('to_location'),
                     'is_airport'    =>  $request->input('is_airport') ? true : false,
+                    'airport_note'  =>  $request->input('airport_note'),
                     'updated_at'    =>  now()
                 ];
                 
@@ -156,7 +162,7 @@ class TripController extends Controller
         $i = 0;
         if($request->input('selected')){
             foreach($request->input('selected') as $id){
-                Trip::where('id', $id)->delete($id);
+                Trip::where('id', $id)->update(['status'=>false]);
     
                 $i = $i +1;
             }
@@ -169,6 +175,7 @@ class TripController extends Controller
         $trips = Trip::select('id','from_location')
         ->where('from_location','LIKE','%' . $request->get('query') . '%')
         ->where('from_location','!=',$request->get('to_location'))
+        ->where('status', true)
         ->skip(0)
         ->take(15)
         ->get();
@@ -179,6 +186,7 @@ class TripController extends Controller
         $trips = Trip::select('id','to_location')
         ->where('to_location','LIKE','%' . $request->get('query') . '%')
         ->where('to_location','!=',$request->get('from_location'))
+        ->where('status', true)
         ->skip(0)
         ->take(15)
         ->get();
