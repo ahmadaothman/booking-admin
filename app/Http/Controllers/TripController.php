@@ -192,4 +192,14 @@ class TripController extends Controller
         ->get();
         return $trips;
     }
+
+    public function getNote(Request $request){
+        $trip = Trip::where('from_location',$request->get('location'))
+        ->where('airport_note','<>','')
+        ->whereNotNull('airport_note')
+        ->first();
+
+        return $trip;
+
+    }
 }

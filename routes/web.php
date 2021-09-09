@@ -42,6 +42,8 @@ Route::get('/trips/edit', [TripController::class, 'form'])->name('EditTrip');
 Route::post('/trips/add', [TripController::class, 'form'])->name('AddTrip');
 Route::post('/trips/edit', [TripController::class, 'form'])->name('EditTrip');
 Route::post('/trips/remove', [TripController::class, 'remove'])->name('removeTrips');
+Route::get('/trips/note', [TripController::class, 'getNote'])->name('getAriportNote');
+
 // auto suggest
 Route::get('/trips/search/pickup', [TripController::class, 'getPickappLocations'])->name('search_pickup');
 Route::get('/trips/search/destination', [TripController::class, 'getDestinations'])->name('searh_destination');

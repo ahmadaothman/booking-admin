@@ -144,36 +144,51 @@
 
                     return process(newData);
                 });
-        }
+        },
+        afterSelect: function(args){
+                $.ajax({
+                    url: "{{ route('getAriportNote') }}",
+                    type:'GET',
+                    data:{
+                        location: $('#from_location').val()
+                    },
+                    success:function(ress){
+                        if(ress.hasOwnProperty('airport_note')){
+                            $('#airport_note').val(ress.airport_note)
+                        }
+                    }
+                })
+            }
 
         });
 
         $('#to_location').typeahead({
 
-        source: function (query, process) {
-            return $.getJSON(
-                "{{ route('searh_destination') }}",
-                {
-                    query: query,
-                    from_location: $('#from_location').val()
-                },
-                function (data) {
-                    var newData = [];
+            source: function (query, process) {
+                return $.getJSON(
+                    "{{ route('searh_destination') }}",
+                    {
+                        query: query,
+                        from_location: $('#from_location').val()
+                    },
+                    function (data) {
+                        var newData = [];
 
-                    $.each(data, function(){
+                        $.each(data, function(){
 
-                        newData.push(this.to_location);
+                            newData.push(this.to_location);
 
+                        });
+
+                        return process(newData);
                     });
-
-                    return process(newData);
-                });
-        }
+            }
+           
 
         });
 </script>
 <script type="text/javascript">
-        '@if($trip->is_airport == 1)'
+        '@if(isset($trip->is_airport) && $trip->is_airport == 1)'
             $('#airport_note_div').show();
         '@else'
             $('#airport_note_div').hide();
@@ -184,7 +199,7 @@
             $('#airport_note_div').show();
         }else{
             $('#airport_note_div').hide();
-            $('#airport_note_div').val("")
+           // $('#airport_note').val("")
         }
     });
 </script>
