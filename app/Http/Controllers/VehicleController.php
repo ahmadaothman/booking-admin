@@ -34,6 +34,8 @@ class VehicleController extends Controller
             $vehicles->where('description', 'LIKE','%' . $request->get('filter_description') . '%');
         }
 
+        $vehicles->where('status',1);
+
         if($request->get('filter_max_people')){
             if(str_contains($request->get('filter_max_people'), '<') && !str_contains($request->get('filter_max_people'), '<=')){
                 $vehicles->where('max_people','<', str_replace('<','',$request->get('filter_max_people')) );
@@ -78,15 +80,19 @@ class VehicleController extends Controller
 
                 $image = $request->file('image');
 
-                $original_name = $image->getClientOriginalName();
-                $extension = explode(".",$original_name);
-                $extension = $extension[count($extension) - 1];
+                if($image){
+                    $original_name = $image->getClientOriginalName();
+                    $extension = explode(".",$original_name);
+                    $extension = $extension[count($extension) - 1];
 
-                $new_name =  rand() . "_" . $original_name;
+                    $new_name =  rand() . "_" . $original_name;
 
-             //   dd($new_name);
+                //   dd($new_name);
 
-                $path = $image->move(public_path('images'), $new_name);
+                    $path = $image->move(public_path('images'), $new_name);
+                }else{
+                    $new_name = "";
+                }
 
 
                 $validated = $request->validate($validation_data);
@@ -97,10 +103,13 @@ class VehicleController extends Controller
                     'description'   =>  $request->input('description'),
                     'max_people'    =>  $request->input('max_people'),
                     'price'         =>  $request->input('price'),
-                    'image'         =>  'images/' . $new_name,
                     'sort_order'    =>  $request->input('sort_order'),
                     'updated_at'    =>   now()
                 ];
+                
+                if(!empty($new_name)){
+                    $vehicle_data['image'] = 'images/' . $new_name;
+                }
 
                 try { 
                     if($request->path() == 'vehicles/add'){
