@@ -84,13 +84,13 @@
                         <input type="text"  class="form-control" id="sex" name="sex" value="{{ $booking->sex }}" />
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 d-none">
                     <div class="form-group ">
                         <label for="date_of_birthday" >Date Of Birthday:</label>
                         <input type="text"  class="form-control" id="date_of_birthday" name="date_of_birthday" value="{{ $booking->date_of_birthday }}" />
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <div class="form-group ">
                         <label for="telephone" >Telephone:</label>
                         <input type="text"  class="form-control" id="telephone" name="telephone" value="{{ $booking->telephone }}" />
@@ -226,7 +226,7 @@
                        </div>
                </div>
            @endif
-           <div class="row">
+           <div class="row d-none">
                <div class="col-md-6">
                    <div class="form-group ">
                        <label for="return_pickup_note" >Pickup location note:</label>
