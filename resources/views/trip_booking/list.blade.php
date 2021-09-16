@@ -40,45 +40,86 @@
             
             </p>
 
-            @if (app('request')->input('filter_name') || app('request')->input('filter_description') || app('request')->input('filter_max_people') || app('request')->input('filter_price') )
-                <div class="collapse mb-20 show" id="collapseExample">
-            @else
+       
                 <div class="collapse mb-20 " id="collapseExample">
-            @endif
+
           
                 <div class="card card-body">
                     <div class="row mb-20">
-                        <!--Filter Name-->
+                            <!--Trip Type-->
 
-                        <div class="col-sm-4">
-                            <label for="filter_name">Filter Name:</label>
-                            <input type="text" id="filter_name" class="form-control form-control-sm" placeholder="Filter Name" value="{{ app('request')->input('filter_name') }}"/>
-                        </div>
-          
-                         <!--Filter Desc -->
-                         <div class="col-sm-4">
-                            <label for="filter_city">Filter Description:</label>
-                            <input type="text" id="filter_description" class="form-control form-control-sm" placeholder="Filter Description" value="{{ app('request')->input('filter_description') }}"/>
-                        </div>
-                         <!--Filter Max -->
-                         <div class="col-sm-4">
-                            <label for="filter_city">Filter Max Peape:</label>
-                            <input type="text" id="filter_max_people" class="form-control form-control-sm" placeholder="You can you <, >, !=, >= and <=" value="{{ app('request')->input('filter_max_people') }}"/>
-                        </div>
-                  
+                            <div class="col-sm-3">
+                                <label for="filter_trip_type">Trip Type:</label>
+                                <select class="form-control form-control-sm" id="filter_trip_type">
+                                    <option value="-1">--none--</option>
+                                    @if(app('request')->input('filter_trip_type') == 'one_way')
+                                     <option value="one_way" selected="selected">One Way</option>
+                                    @else 
+                                    <option value="one_way" ">One Way</option>
+                                    @endif
+                                    @if(app('request')->input('filter_trip_type') == 'round')
+                                     <option value="round" selected="selected">Round Trip</option>
+                                    @else 
+                                    <option value="round" ">Round Trip</option>
+                                    @endif
+                                </select>
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label for="filter_partner">Pertner:</label>
+                                <select class="form-control form-control-sm" id="filter_partner">
+                                    <option value="-1">--none--</option>
+                                   
+                                    @foreach($users as $user)
+                                        @if($user->id == app('request')->input('filter_partner'))
+                                            <option value="{{ $user->id }}" selected="selected">{{ $user->name }}</option>
+                                        @else
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                        @endif
+                                    @endforeach
+                                </select>
+                            </div>
+
+
+                            <div class="col-sm-3">
+                                <label for="filter_from">From:</label>
+                                <input type="text" class="form-control form-control-sm h-50" id="filter_from" value="{{ app('request')->input('filter_from') }}">
+                            </div>
+
+                            <div class="col-sm-3">
+                                <label for="filter_to">To:</label>
+                                <input type="text" class="form-control form-control-sm h-50" id="filter_to" value="{{ app('request')->input('filter_to') }}">
+                            </div>
+
                         
                         
                     </div>
+                    <div class="row mb-4">
+                        <div class="col-sm-3">
+                            <label for="filter_status">Booking Status:</label>
+                            <select class="form-control form-control-sm" id="filter_status">
+                                <option value="-1">--none--</option>
+                                <option value="1">Approved</option>
+                                <option value="2">Cancelled</option>
+                                <option value="3">Completed</option>
+                            </select>
+                        </div>
+
+                        <div class="col-sm-3">
+                            <label for="filter_date">Booking Date:</label>
+                            <input type="text" class="form-control form-control-sm h-50" id="filter_date" value="{{ app('request')->input('filter_date') }}">
+                        </div>
+                    </div>
                     <div class="w-100 text-right ">
-                        <button  type="button" id="btn_filter" class="btn btn-info btn-sm"> 
-                            <i class="icon-copy fa fa-filter" aria-hidden="true"></i> Filters
+                        <button  type="button" id="btn_filter" class="btn btn-info btn-sm"  onclick="filter()"> 
+                            <i class="icon-copy fa fa-filter" aria-hidden="true"></i> Filter
                         </button>
                     </div>
                 </div>
             </div>
            @csrf
             <div class="row">
-                <table class="table table-striped  table-hover  data-table-export table-xs table-responsive" style="font-size:14px !important;">
+                <table class="table table-striped  table-hover  data-table-export table-xs w-100" style="font-size:14px !important;">
                         <thead>
                             <tr>
                                 <th class="table-plus datatable-nosort">ID</th>
@@ -159,30 +200,7 @@
 
 
 
-$('#btn_filter').on('click',function(){
-    filter()
-})
 
-function filter(){
-    var url = '';
-    if($('#filter_name').val() != '' ){
-        url += '&filter_name=' + $('#filter_name').val();
-    }
-
-    if($('#filter_description').val() != '' ){
-        url += '&filter_description=' + $('#filter_description').val();
-    }
-
-    if($('#filter_max_people').val() != '' ){
-        url += '&filter_max_people=' + $('#filter_max_people').val();
-    }
-
-    
-
-
-
-    location.href = "{{ route('vehicles',) }}/?" + url
-}
 
 $('input').on('keyup', function (e) {
     if (e.key === 'Enter' || e.keyCode === 13) {
@@ -190,4 +208,149 @@ $('input').on('keyup', function (e) {
     }
 });
 </script>
+<script type="text/javascript">
+      $('#filter_status').val("{{ app('request')->input('filter_status') }}");
+
+    function filter(){
+      var url = '';
+
+      if($('#filter_trip_type').val() != "-1"){
+          url += '&filter_trip_type=' + $('#filter_trip_type').val();
+      }
+
+      if($('#filter_partner').val() != "-1"){
+          url += '&filter_partner=' + $('#filter_partner').val();
+      }
+
+      if($('#filter_from').val() != ""){
+          url += '&filter_from=' + $('#filter_from').val();
+      }
+
+      if($('#filter_to').val() != ""){
+          url += '&filter_to=' + $('#filter_to').val();
+      }
+
+
+      if($('#filter_status').val() != "-1" && $('#filter_status').val() != null){
+          url += '&filter_status=' + $('#filter_status').val();
+      }
+
+      if($('#filter_date').val() != ""){
+          url += '&filter_date=' + $('#filter_date').val();
+      }
+
+
+      location.href = "{{ route('Tripbooking',) }}/?" + url
+  
+    }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+<script type="text/javascript">
+    $('#filter_from').typeahead({
+
+       source: function (query, process) {
+           return $.getJSON(
+               "{{ route('search_pickup') }}",
+               {
+                   query: query,
+                   to_location:  $('#to_location').val()
+               },
+               function (data) {
+                   var newData = [];
+
+                   $.each(data, function(){
+
+                       newData.push(this.from_location);
+
+                   });
+
+                   return process(newData);
+               });
+       },
+       afterSelect: function(args){
+               $.ajax({
+                   url: "{{ route('getAriportNote') }}",
+                   type:'GET',
+                   data:{
+                       location: $('#from_location').val()
+                   },
+                   success:function(ress){
+                    
+                   }
+               })
+           }
+
+       });
+
+       $('#filter_to').typeahead({
+
+           source: function (query, process) {
+               return $.getJSON(
+                   "{{ route('searh_destination') }}",
+                   {
+                       query: query,
+                       from_location: $('#from_location').val()
+                   },
+                   function (data) {
+                       var newData = [];
+
+                       $.each(data, function(){
+
+                           newData.push(this.to_location);
+
+                       });
+
+                       return process(newData);
+                   });
+           }
+          
+
+       });
+</script>
+<script type="text/javascript" src="{{ asset('/src/plugins/daterangpicker/js/moment.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('/src/plugins/daterangpicker/js/daterangepicker.js') }}"></script>
+<link rel="stylesheet" type="text/css" href="{{ asset('/src/plugins/daterangpicker/css/daterangepicker.css') }}" />
+
+<script type="text/javascript">
+    var start = moment("2010-01-01","YYYY-MM-DD").format("YYYY-MM-DD");
+    var end = moment();
+    
+    var filter_date = "{{ app('request')->input('filter_date') }}";
+    
+    if(filter_date != "") {
+
+        var dates = filter_date.split(" - ");
+
+        start = moment(dates[0],"YYYY-MM-DD HH:mm").format("YYYY-MM-DD HH:mm");
+        end = moment(dates[1],"YYYY-MM-DD HH:mm").format("YYYY-MM-DD HH:mm");
+
+    }
+        
+    $('#filter_date').daterangepicker({
+        startDate: start,
+        endDate: end,
+        ranges: {
+            'All time': [moment("2010-01-01","YYYY-MM-DD").format("YYYY-MM-DD"), moment()],
+            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        locale:{
+            format: 'YYYY-MM-DD HH:mm',
+            cancelLabel: 'Clear'
+        }
+	});
+
+    $('#filter_date').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss') + ' - ' + picker.endDate.format('YYYY-MM-DD HH:mm:ss'));
+    });
+
+    $('#filter_date').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+    });
+
+</script>
+
 @endsection

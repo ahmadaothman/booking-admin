@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TripBooking;
+use App\Models\Trip;
+use App\Models\User;
+
 use Illuminate\Support\Facades\DB;
 use PragmaRX\Countries\Package\Countries;
 
@@ -14,12 +17,44 @@ class TripBookingController extends Controller
         $this->middleware('auth');
     }
 
-    public function index(){
+    public function index(Request $request){
         $data = array();
-
+        $data['users'] = User::where('user_type_id',2)->get();
         $bookings =  TripBooking::orderBy('id','DESC');
 
-        $data['bookings'] = $bookings->paginate(15);
+        if($request->get('filter_trip_type')){
+            $bookings->where('trip_type',$request->get('filter_trip_type'));
+        }
+
+        if($request->get('filter_pertner')){
+            $bookings->where('agent_id',$request->get('filter_pertner'));
+        }
+
+        if($request->get('filter_from')){
+            $trip_ids = Trip::where('from_location',$request->get('filter_from'))->pluck('id')->toArray();
+
+            $bookings->whereIn('trip_id',$trip_ids);
+        }
+
+        if($request->get('filter_to')){
+            $trip_ids = Trip::where('to_location',$request->get('filter_to'))->pluck('id')->toArray();
+
+            $bookings->whereIn('trip_id',$trip_ids);
+        }
+
+        if($request->get('filter_status')){
+            $bookings->where('status',$request->get('filter_status'));
+        }
+
+        if($request->get('filter_date') != null){
+            $datas = explode(" - ", $request->get('filter_date')); 
+
+            $bookings->whereBetween('booking_date',array($datas[0],$datas[1]));
+        }
+
+
+
+        $data['bookings'] = $bookings->paginate(100);
 
         return view('trip_booking.list',$data);
     }
