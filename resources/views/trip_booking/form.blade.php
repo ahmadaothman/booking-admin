@@ -16,7 +16,7 @@
                     </nav>
                 </div>
 
-                @if ($booking->status != 2)
+                @if ($booking->status != 2 && $booking->status != 3)
                 <div class="col-md-6 text-right">
                     @if($booking->status != 3)
                     <button type="button" class="btn btn-success" onclick="$('#complete_form').submit()"><i class="icon-copy fa fa-check" aria-hidden="true"></i> Complete</button>
@@ -40,7 +40,7 @@
         @csrf    
         <input type="hidden" name="id" value="{{ $booking->id }}" />
        </form>
-       @if ($booking->status == 2)
+       @if ($booking->status == 2 || $booking->status == 3)
            <style>
                #from {
                 pointer-events: none;
