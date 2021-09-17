@@ -132,7 +132,7 @@ class TripController extends Controller
                 ];
                 
                 Trip::where('id',$request->get('id'))->update($trip_data);
-
+                Trip::where('from_location',$request->input('from_location'))->update(['airport_note'=>$request->input('airport_note')]);
                 DB::table('trip_vehicle_pricing')->where('trip_id',$request->get('id'))->delete();
 
                 foreach($request->input('vehicle') as $key => $value){
