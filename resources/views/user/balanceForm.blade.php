@@ -18,7 +18,7 @@
                 <div class="col-md-6 col-sm-12 text-right">
                     <button type="submit" class="btn btn-primary " onclick="event.preventDefault();
                     document.getElementById('user-form').submit();"><i class="icon-copy fi-save"></i> Save</button>
-                    <a href="{{ route('userBalance') }}" type="submit" class="btn btn-secondary text-white" ><i class="icon-copy fi-x"></i> Cancel</a>
+                    <a href="/users/balance?user_id={{ app('request')->input('user_id') }}"  class="btn btn-secondary text-white" ><i class="icon-copy fi-x"></i> Cancel</a>
 
                 </div>
             </div>

@@ -208,7 +208,7 @@ class UserController extends Controller
 
             $validated = $request->validate($validation_data);
 
-            $note = !empty($request->input('note')) ?  ', ' . $request->input('note') : '';
+            $note = $request->input('note') . "";
 
             DB::table('user_balance')->insert(
                 [

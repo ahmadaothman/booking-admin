@@ -16,7 +16,7 @@
                 <div class="col-md-6 col-sm-12 text-right">
                     <button type="submit" class="btn btn-primary " onclick="event.preventDefault();
                     document.getElementById('vehicle-form').submit();"><i class="icon-copy fi-save"></i> Save</button>
-                    <a type="submit" class="btn btn-secondary text-white" ><i class="icon-copy fi-x"></i> Cancel</a>
+                    <a href="/vehicles" class="btn btn-secondary text-white" ><i class="icon-copy fi-x"></i> Cancel</a>
 
                 </div>
             </div>

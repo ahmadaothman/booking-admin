@@ -16,7 +16,7 @@
                 <div class="col-md-6 col-sm-12 text-right">
                     <button type="submit" class="btn btn-primary " onclick="event.preventDefault();
                     document.getElementById('trip-form').submit();"><i class="icon-copy fi-save"></i> Save</button>
-                    <button type="button" class="btn btn-secondary text-white" ><i class="icon-copy fi-x"></i> Cancel</a>
+                    <a type="button" class="btn btn-secondary text-white" href="/trips"><i class="icon-copy fi-x"></i> Cancel</a>
 
                 </div>
             </div>
