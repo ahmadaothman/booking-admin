@@ -165,4 +165,8 @@ class TripBookingController extends Controller
 
         return redirect(route('Tripbooking'));
     }
+    public function complete(Request $request){
+        TripBooking::where('id',$request->input('complete_id'))->update(['status'=>3]);
+        return redirect(route('Tripbooking'));
+    }
 }

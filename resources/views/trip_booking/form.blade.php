@@ -15,14 +15,27 @@
                         </ol>
                     </nav>
                 </div>
+
                 @if ($booking->status != 2)
                 <div class="col-md-6 text-right">
+                    @if($booking->status != 3)
+                    <button type="button" class="btn btn-success" onclick="$('#complete_form').submit()"><i class="icon-copy fa fa-check" aria-hidden="true"></i> Complete</button>
+
+                    @endif
                     <button type="button" class="btn btn-danger" onclick="$('#cancel_form').submit()"><i class="icon-copy fa fa-trash-o" aria-hidden="true"></i> Cancel Booking</button>
                     <button type="button" class="btn btn-primary" onclick="$('#from').submit()"><i class="icon-copy fa fa-save" aria-hidden="true"></i> Save</button>
                 </div>
                 @endif
             </div>
         </div>
+
+        <form id="complete_form" action="{{ route('completeTripBooking') }}" method="POST">
+            
+            <input type="hidden" name="complete_id" value="{{ $booking->id }}" />
+
+            @csrf
+        </form>
+
        <form id="cancel_form" action="{{ route('cancelTripBooking') }}" method="POST">
         @csrf    
         <input type="hidden" name="id" value="{{ $booking->id }}" />
