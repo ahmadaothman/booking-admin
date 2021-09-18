@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-md-6 col-sm-12 text-right">
                     <a type="button" class="btn btn-primary " href="/users/add?user_type_id={{ app('request')->input('user_type_id') }}"><i class="icon-copy fi-plus"></i> Add {{ $user_type }}</a>
-                    <button id="sa-warning" type="button" class="btn btn-danger" onclick="remove();"><i class="icon-copy fi-trash"></i> Remove</button>
+                    <button id="sa-warning" type="button" class="btn btn-danger d-none" onclick="remove();"><i class="icon-copy fi-trash"></i> Remove</button>
                 </div>
             </div>
         </div>
