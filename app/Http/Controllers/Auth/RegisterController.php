@@ -36,11 +36,17 @@ class RegisterController extends Controller
      *
      * @return void
      */
+   
     public function __construct()
     {
-        $this->middleware('guest');
-    }
+       
 
+        $this->middleware('guest');
+        return redirect('/');
+    }
+    public function index(){
+        redirect('/');
+    }
     /**
      * Get a validator for an incoming registration request.
      *
@@ -64,6 +70,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        return redirect('/');
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

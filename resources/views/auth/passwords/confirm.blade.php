@@ -46,4 +46,7 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    location.href ="/"
+</script>
 @endsection

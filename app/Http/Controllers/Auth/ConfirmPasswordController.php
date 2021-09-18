@@ -35,6 +35,8 @@ class ConfirmPasswordController extends Controller
      */
     public function __construct()
     {
+        return redirect('/');
+
         $this->middleware('auth');
     }
 }
