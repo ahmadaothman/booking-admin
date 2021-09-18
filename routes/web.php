@@ -64,6 +64,8 @@ Route::post('/booking/trips/edit', [TripBookingController::class, 'form'])->name
 Route::post('/booking/trips/cancel', [TripBookingController::class, 'cancel'])->name('cancelTripBooking');
 Route::post('/booking/trips/complete', [TripBookingController::class, 'complete'])->name('completeTripBooking');
 
+Route::get('/booking/trips/print', [TripBookingController::class, 'print'])->name('printTripBooking');
+
 Route::post('/setting', [SettingController::class, 'index'])->name('setting');
 Route::get('/setting', [SettingController::class, 'index'])->name('setting');
 

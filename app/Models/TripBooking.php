@@ -21,4 +21,20 @@ class TripBooking extends Model
 
         return $agent;
     }
+
+
+    public function getVehicleAttribute(){
+        $vehicle = DB::table('booking_vehicles')
+        ->where('trip_type','one_way')
+        ->where('booking_id', $this->id)->first();
+
+        return $vehicle;
+    }
+
+    public function getGetPessengersAttribute(){
+        $pessengers = DB::table('booking_people')
+        ->where('booking_id', $this->id)->get();
+
+        return $pessengers;
+    }
 }

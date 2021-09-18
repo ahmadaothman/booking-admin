@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\TripBooking;
 use App\Models\Trip;
 use App\Models\User;
+use App\Models\Vehicle;
 
 use Illuminate\Support\Facades\DB;
 use PragmaRX\Countries\Package\Countries;
@@ -171,16 +172,15 @@ class TripBookingController extends Controller
     }
 
 
-    public function viewBooking(Request $request){
+    public function print(Request $request){
         $data = array();
 
-        $booking_data = Booking::where('id',$request->get('id'))
-
-        ->where('agent_id',auth()->id())->first();
+        $booking_data = TripBooking::where('id',$request->get('id'))->first();
+        
 
         if(!$booking_data){
           $data['trip_not_found'] = true;
-          return view('transportation.vehicle_success',$data);
+          return view('trip_booking.print',$data);
         }
 
         $data['booking_data'] = $booking_data;
@@ -216,10 +216,7 @@ class TripBookingController extends Controller
 
         $data['user'] =  DB::table('users')->where('id', auth()->id())->first();
 
-        if( !empty($booking_data['trip_arrival_time'])){
-            $data['airport_port_number'] = Setting::getSetting('airport_port_number') ? Setting::getSetting('airport_port_number')->setting_value : false;
-            $data['airport_banner_number'] = Setting::getSetting('airport_banner_number') ? Setting::getSetting('airport_banner_number')->setting_value : false;    
-        }
+      
 
         $data['booking_trip'] = DB::table('trip')->where('id',$booking_data->trip_id)->first();
       

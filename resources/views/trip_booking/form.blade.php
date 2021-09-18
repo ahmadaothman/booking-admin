@@ -18,6 +18,8 @@
 
                 @if ($booking->status != 2 )
                 <div class="col-md-6 text-right">
+                    <a  class="btn btn-info text-white" href="{{ route('printTripBooking') }}?id={{ $booking->id }}" target="_blank"><i class="icon-copy fa fa-print" aria-hidden="true"></i> Print</a>
+
                     @if($booking->status != 3)
                     <button type="button" class="btn btn-success" onclick="$('#complete_form').submit()"><i class="icon-copy fa fa-check" aria-hidden="true"></i> Complete</button>
 
