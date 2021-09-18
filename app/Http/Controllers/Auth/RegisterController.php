@@ -47,6 +47,12 @@ class RegisterController extends Controller
     public function index(){
         redirect('/');
     }
+
+    public function showRegistrationForm()
+    {
+        return redirect('login');
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
