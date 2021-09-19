@@ -46,18 +46,20 @@
           
                 <div class="card card-body">
                     <div class="row mb-20">
+                         <!--Filter From -->
+                         <div class="col-sm-3">
+                            <label for="filter_from">From:</label>
+                            <input type="text" id="filter_from" class="form-control form-control-sm" placeholder="Filter From" value="{{ app('request')->input('filter_from') }}"/>
+                        </div>
+
                         <!--Filter Name-->
 
                         <div class="col-sm-3">
-                            <label for="filter_name">Filter Name:</label>
-                            <input type="text" id="filter_name" class="form-control form-control-sm" placeholder="Filter Name" value="{{ app('request')->input('filter_name') }}"/>
+                            <label for="filter_to">Filter To:</label>
+                            <input type="text" id="filter_to" class="form-control form-control-sm" placeholder="Filter To" value="{{ app('request')->input('filter_to') }}"/>
                         </div>
           
-                         <!--Filter Desc -->
-                         <div class="col-sm-3">
-                            <label for="filter_city">Filter Description:</label>
-                            <input type="text" id="filter_description" class="form-control form-control-sm" placeholder="Filter Description" value="{{ app('request')->input('filter_description') }}"/>
-                        </div>
+                        
                          <!--Filter Max -->
                          <div class="col-sm-3">
                             <label for="filter_city">Filter Max Peape:</label>
