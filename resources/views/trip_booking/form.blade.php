@@ -42,7 +42,7 @@
         @csrf    
         <input type="hidden" name="id" value="{{ $booking->id }}" />
        </form>
-       @if ($booking->status == 2 || $booking->status == 3)
+       @if ($booking->status == 2)
            <style>
                #from {
                 pointer-events: none;
