@@ -25,7 +25,7 @@ class TripController extends Controller
 
         $trips =  Trip::where('status',true)->orderBy('id');
 
-        $data['trips'] = $trips->paginate(15);
+        $data['trips'] = $trips->paginate(50);
 
         return view('trips.list',$data);
     }
