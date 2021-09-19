@@ -29,7 +29,7 @@
             </div>
             <div class="container">
                
-                <form id="vehicle-form" action="{{ $action }}" method="POST" enctype="multipart/form-data">
+                <form id="vehicle-form" action="{{ $action }}" method="POST" enctype="multipart/form-data" hidden>
                     @csrf
                     <div class="form-group row">
                         <label class="col-sm-12 col-md-2 col-form-label">Note:</label>
