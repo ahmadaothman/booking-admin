@@ -47,12 +47,7 @@ class TripBookingController extends Controller
             $bookings->where('status',$request->get('filter_status'));
         }
 
-        if($request->get('filter_date') != null){
-            $datas = explode(" - ", $request->get('filter_date')); 
-
-            $bookings->whereBetween('booking_date',array($datas[0],$datas[1]));
-        }
-
+    
 
 
         $data['bookings'] = $bookings->paginate(100);
