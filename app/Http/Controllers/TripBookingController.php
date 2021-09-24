@@ -27,8 +27,8 @@ class TripBookingController extends Controller
             $bookings->where('trip_type',$request->get('filter_trip_type'));
         }
 
-        if($request->get('filter_pertner')){
-            $bookings->where('agent_id',$request->get('filter_pertner'));
+        if($request->get('filter_partner')){
+            $bookings->where('agent_id',$request->get('filter_partner'));
         }
 
         if($request->get('filter_from')){
