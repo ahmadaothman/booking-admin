@@ -83,12 +83,12 @@
 
                             <div class="col-sm-3">
                                 <label for="filter_from">From:</label>
-                                <input type="text" class="form-control form-control-sm h-50" id="filter_from" value="{{ app('request')->input('filter_from') }}">
+                                <input type="text" class="form-control form-control-sm h-50" id="filter_from" value="{{ app('request')->input('filter_from') }}" autocomplete="off">
                             </div>
 
                             <div class="col-sm-3">
                                 <label for="filter_to">To:</label>
-                                <input type="text" class="form-control form-control-sm h-50" id="filter_to" value="{{ app('request')->input('filter_to') }}">
+                                <input type="text" class="form-control form-control-sm h-50" id="filter_to" value="{{ app('request')->input('filter_to') }}" autocomplete="off">
                             </div>
 
                         
@@ -107,10 +107,14 @@
 
                         <div class="col-sm-3">
                             <label for="filter_date">Booking Date:</label>
-                            <input type="text" class="form-control form-control-sm h-50" id="filter_date" value="{{ app('request')->input('filter_date') }}">
+                            <input type="text" class="form-control form-control-sm h-50" id="filter_date" value="{{ app('request')->input('filter_date') }}" autocomplete="off">
                         </div>
                     </div>
                     <div class="w-100 text-right ">
+                        <button  type="button" id="btn_filter" class="btn btn-danger btn-sm"  onclick="ClearFilter()"> 
+                            <i class="icon-copy fa fa-times" aria-hidden="true"></i> Clear Filters
+                        </button>
+
                         <button  type="button" id="btn_filter" class="btn btn-info btn-sm"  onclick="filter()"> 
                             <i class="icon-copy fa fa-filter" aria-hidden="true"></i> Filter
                         </button>
@@ -188,28 +192,29 @@
 
 <script type="text/javascript">
     $('#select-all').click(function(event) {   
-    if(this.checked) {
-        // Iterate each checkbox
-        $(':checkbox').each(function() {
-            this.checked = true;                        
-        });
-    } else {
-        $(':checkbox').each(function() {
-            this.checked = false;                       
-        });
-    }
-});
+        if(this.checked) {
+            // Iterate each checkbox
+            $(':checkbox').each(function() {
+                this.checked = true;                        
+            });
+        } else {
+            $(':checkbox').each(function() {
+                this.checked = false;                       
+            });
+        }
+    });
 
 
 
 
 
-$('input').on('keyup', function (e) {
-    if (e.key === 'Enter' || e.keyCode === 13) {
-        filter()
-    }
-});
+    $('input').on('keyup', function (e) {
+        if (e.key === 'Enter' || e.keyCode === 13) {
+            filter()
+        }
+    });
 </script>
+
 <script type="text/javascript">
       $('#filter_status').val("{{ app('request')->input('filter_status') }}");
 
@@ -244,6 +249,10 @@ $('input').on('keyup', function (e) {
 
       location.href = "{{ route('Tripbooking',) }}/?" + url
   
+    }
+
+    function ClearFilter(){
+        location.href = "{{ route('Tripbooking',) }}"
     }
 </script>
 
@@ -310,13 +319,14 @@ $('input').on('keyup', function (e) {
 
        });
 </script>
+
 <script type="text/javascript" src="{{ asset('/src/plugins/daterangpicker/js/moment.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('/src/plugins/daterangpicker/js/daterangepicker.js') }}"></script>
 <link rel="stylesheet" type="text/css" href="{{ asset('/src/plugins/daterangpicker/css/daterangepicker.css') }}" />
 
 <script type="text/javascript">
     var start = moment("2010-01-01","YYYY-MM-DD").format("YYYY-MM-DD");
-    var end = moment();
+    var end = moment("2055-01-01","YYYY-MM-DD").format("YYYY-MM-DD");
     
     var filter_date = "{{ app('request')->input('filter_date') }}";
     
@@ -333,7 +343,7 @@ $('input').on('keyup', function (e) {
         startDate: start,
         endDate: end,
         ranges: {
-            'All time': [moment("2010-01-01","YYYY-MM-DD").format("YYYY-MM-DD"), moment()],
+            'All time': [moment("2010-01-01","YYYY-MM-DD").format("YYYY-MM-DD"), moment("2055-01-01","YYYY-MM-DD").format("YYYY-MM-DD")],
             'Last 7 Days': [moment().subtract(6, 'days'), moment()],
             'Last 30 Days': [moment().subtract(29, 'days'), moment()],
             'This Month': [moment().startOf('month'), moment().endOf('month')],

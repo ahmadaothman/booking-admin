@@ -47,35 +47,36 @@
                 <div class="card card-body">
                     <div class="row mb-20">
                          <!--Filter From -->
-                         <div class="col-sm-3">
+                         <div class="col-sm-4">
                             <label for="filter_from">From:</label>
-                            <input type="text" id="filter_from" class="form-control form-control-sm" placeholder="Filter From" value="{{ app('request')->input('filter_from') }}"/>
+                            <input type="text" id="filter_from" class="form-control form-control-sm" placeholder="Filter From" value="{{ app('request')->input('filter_from') }}" autocomplete="off"/>
                         </div>
 
                         <!--Filter Name-->
 
-                        <div class="col-sm-3">
+                        <div class="col-sm-4">
                             <label for="filter_to">Filter To:</label>
-                            <input type="text" id="filter_to" class="form-control form-control-sm" placeholder="Filter To" value="{{ app('request')->input('filter_to') }}"/>
+                            <input type="text" id="filter_to" class="form-control form-control-sm" placeholder="Filter To" value="{{ app('request')->input('filter_to') }}" autocomplete="off"/>
+                        </div>
+
+                        <div class="col-sm-4">
+                            <label for="filter_is_airport">Is Airport:</label>
+                            <select class="form-control" id="filter_is_airport">
+                                <option value="-1">--none--</option>
+                                <option value="1" @if(app('request')->input('filter_is_airport') == 1) selected @endif>Yes</option>
+                                <option value="0" @if(app('request')->input('filter_is_airport') != null &&  app('request')->input('filter_is_airport') != 1) selected @endif>No</option>
+                            </select>
                         </div>
           
                         
-                         <!--Filter Max -->
-                         <div class="col-sm-3">
-                            <label for="filter_city">Filter Max Peape:</label>
-                            <input type="text" id="filter_max_people" class="form-control form-control-sm" placeholder="Filter Max Peape" value="{{ app('request')->input('filter_max_people') }}"/>
-                        </div>
-                        <!--Filter Price -->
-                        <div class="col-sm-3">
-                            <label for="filter_telephone">Filter Price:</label>
-                            <input type="text" id="filter_price" class="form-control form-control-sm" placeholder="Filter Price" value="{{ app('request')->input('filter_price') }}"/>
-                        </div>
-                        
-                        
                     </div>
                     <div class="w-100 text-right ">
-                        <button  type="button" id="btn_filter" class="btn btn-info btn-sm"> 
-                            <i class="icon-copy fa fa-filter" aria-hidden="true"></i> Filters
+                        <button  type="button" id="btn_filter" class="btn btn-danger btn-sm"  onclick="ClearFilter()"> 
+                            <i class="icon-copy fa fa-times" aria-hidden="true"></i> Clear Filters
+                        </button>
+
+                        <button  type="button" id="btn_filter" class="btn btn-info btn-sm"  onclick="filter()"> 
+                            <i class="icon-copy fa fa-filter" aria-hidden="true"></i> Filter
                         </button>
                     </div>
                 </div>
@@ -90,7 +91,9 @@
                         <th class="table-plus datatable-nosort">Country</th>
                         <th class="table-plus datatable-nosort">From</th>
                         <th class="table-plus datatable-nosort">To</th>
-                        <th class="table-plus datatable-nosort">Available Vehicles</th>
+                        <th class="table-plus datatable-nosort">Available Vehicles For Agency</th>
+                        <th class="table-plus datatable-nosort">Available Vehicles For Public</th>
+                        <th class="table-plus datatable-nosort">Is Airport</th>
                         <th class="table-plus datatable-nosort">Created At</th>
                         <th class="table-plus datatable-nosort">Modified At</th>
                         <th class="table-plus datatable-nosort">Action</th>
@@ -111,7 +114,13 @@
                             </td>
                             <td class="align-middle">{{ $trip->from_location }}</td>
                             <td class="align-middle">{{ $trip->to_location }}</td>
-                            <td class="align-middle text-center">{{ $trip->CountVehicle }}</td>
+                            <td class="align-middle text-center">{{ $trip->CountAgencyVehicle }}</td>
+                            <td class="align-middle text-center">{{ $trip->CountPublicVehicle }}</td>
+                            @if($trip->is_airport == 1)
+                            <td class="align-middle text-center text-success">Yes</td>
+                            @else
+                            <td class="align-middle text-center text-danger">No</td>
+                            @endif
                             <td class="align-middle">{{ $trip->created_at }}</td>
                             <td class="align-middle">{{ $trip->updated_at }}</td>
                             <td class="align-middle">
@@ -171,4 +180,95 @@
         });
     }
 </script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+<script type="text/javascript">
+    $('#filter_from').typeahead({
+
+       source: function (query, process) {
+           return $.getJSON(
+               "{{ route('search_pickup') }}",
+               {
+                   query: query,
+                   to_location:  $('#to_location').val()
+               },
+               function (data) {
+                   var newData = [];
+
+                   $.each(data, function(){
+
+                       newData.push(this.from_location);
+
+                   });
+
+                   return process(newData);
+               });
+       },
+       afterSelect: function(args){
+               $.ajax({
+                   url: "{{ route('getAriportNote') }}",
+                   type:'GET',
+                   data:{
+                       location: $('#from_location').val()
+                   },
+                   success:function(ress){
+                    
+                   }
+               })
+           }
+
+       });
+
+       $('#filter_to').typeahead({
+
+           source: function (query, process) {
+               return $.getJSON(
+                   "{{ route('searh_destination') }}",
+                   {
+                       query: query,
+                       from_location: $('#from_location').val()
+                   },
+                   function (data) {
+                       var newData = [];
+
+                       $.each(data, function(){
+
+                           newData.push(this.to_location);
+
+                       });
+
+                       return process(newData);
+                   });
+           }
+          
+
+       });
+</script>
+<script type="text/javascript">
+    $('#filter_status').val("{{ app('request')->input('filter_status') }}");
+
+  function filter(){
+    var url = '';
+
+    if($('#filter_from').val() != ""){
+        url += '&filter_from=' + $('#filter_from').val();
+    }
+
+    if($('#filter_to').val() != ""){
+        url += '&filter_to=' + $('#filter_to').val();
+    }
+
+    if($('#filter_is_airport').val() != "-1"){
+        url += '&filter_is_airport=' + $('#filter_is_airport').val();
+    }
+
+
+    location.href = "{{ route('trips',) }}/?" + url
+  }
+
+  function ClearFilter(){
+      location.href = "{{ route('trips',) }}"
+  }
+</script>
+
 @endsection

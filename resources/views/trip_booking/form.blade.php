@@ -165,14 +165,14 @@
             </div>
             @if ($one_way_trip->is_airport == 1)
                 <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="form-group ">
                                 <label for="fly_number" >Fly Number:</label>
                                 <input type="text"  class="form-control" id="fly_number" name="fly_number" value="{{ $booking->trip_number_main }}" />
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-6 d-none">
                             <div class="form-group ">
                                 <label for="fly_arrival_time" >Fly Arrival Time:</label>
                                 <input type="text"  class="form-control" id="fly_arrival_time" name="fly_arrival_time" value="{{ $booking->trip_arrival_time }}" />

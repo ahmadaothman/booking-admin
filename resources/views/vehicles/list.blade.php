@@ -36,49 +36,7 @@
         @endif
         
         <form id="from" action="{{ route('removeVehicles') }}" method="POST" class="pd-20 bg-white border-radius-4 box-shadow mb-30">
-            <p class="text-right">
-                <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-                    <i class="icon-copy fa fa-filter" aria-hidden="true"></i> Filters
-                </a>
-            
-            </p>
-
-            @if (app('request')->input('filter_name') || app('request')->input('filter_description') || app('request')->input('filter_max_people') || app('request')->input('filter_price') )
-                <div class="collapse mb-20 show" id="collapseExample">
-            @else
-                <div class="collapse mb-20 " id="collapseExample">
-            @endif
           
-                <div class="card card-body">
-                    <div class="row mb-20">
-                        <!--Filter Name-->
-
-                        <div class="col-sm-4">
-                            <label for="filter_name">Filter Name:</label>
-                            <input type="text" id="filter_name" class="form-control form-control-sm" placeholder="Filter Name" value="{{ app('request')->input('filter_name') }}"/>
-                        </div>
-          
-                         <!--Filter Desc -->
-                         <div class="col-sm-4">
-                            <label for="filter_city">Filter Description:</label>
-                            <input type="text" id="filter_description" class="form-control form-control-sm" placeholder="Filter Description" value="{{ app('request')->input('filter_description') }}"/>
-                        </div>
-                         <!--Filter Max -->
-                         <div class="col-sm-4">
-                            <label for="filter_city">Filter Max Peape:</label>
-                            <input type="text" id="filter_max_people" class="form-control form-control-sm" placeholder="You can you <, >, !=, >= and <=" value="{{ app('request')->input('filter_max_people') }}"/>
-                        </div>
-                  
-                        
-                        
-                    </div>
-                    <div class="w-100 text-right ">
-                        <button  type="button" id="btn_filter" class="btn btn-info btn-sm"> 
-                            <i class="icon-copy fa fa-filter" aria-hidden="true"></i> Filters
-                        </button>
-                    </div>
-                </div>
-            </div>
            @csrf
             <div class="row">
                 <table class="table table-striped  table-hover  data-table-export table-xs">

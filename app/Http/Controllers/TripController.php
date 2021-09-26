@@ -25,6 +25,25 @@ class TripController extends Controller
 
         $trips =  Trip::where('status',true)->orderBy('id');
 
+        if($request->get('filter_from')){
+
+            $trips->where('from_location','LIKE','%'.$request->get('filter_from') . '%');
+        }
+
+        if($request->get('filter_to')){
+
+            $trips->where('to_location','LIKE','%'.$request->get('filter_to') . '%');
+        }
+
+        if($request->get('filter_is_airport') != null){
+            
+           if($request->get('filter_is_airport') == "1"){
+            $trips->where('is_airport',1);
+           }else{
+            $trips->where('is_airport','!=',1);
+           }
+        }
+
         $data['trips'] = $trips->paginate(50);
 
         return view('trips.list',$data);
@@ -92,8 +111,8 @@ class TripController extends Controller
                     $vehicle_data = [
                         'trip_id'       =>  $id,
                         'vehicle_id'    =>  $key,
-                        'public_price'  => $value['public_price'],
-                        'private_price' => $value['private_price']
+                        'public_price'  => empty($value['public_price']) ? 0 : $value['public_price'],
+                        'private_price' => empty($value['private_price']) ? 0 : $value['private_price']
                     ]; 
 
                     DB::table('trip_vehicle_pricing')->insert($vehicle_data);
@@ -112,8 +131,8 @@ class TripController extends Controller
                     $vehicle_data = [
                         'trip_id'       =>  $id,
                         'vehicle_id'    =>  $key,
-                        'public_price'  => $value['public_price'],
-                        'private_price' => $value['private_price']
+                        'public_price'  => empty($value['public_price']) ? 0 : $value['public_price'],
+                        'private_price' => empty($value['private_price']) ? 0 : $value['private_price']
                     ]; 
 
                     DB::table('trip_vehicle_pricing')->insert($vehicle_data);
@@ -139,8 +158,8 @@ class TripController extends Controller
                     $vehicle_data = [
                         'trip_id'       =>  $request->get('id'),
                         'vehicle_id'    =>  $key,
-                        'public_price'  => $value['public_price'],
-                        'private_price' => $value['private_price']
+                        'public_price'  => empty($value['public_price']) ? 0 : $value['public_price'],
+                        'private_price' => empty($value['private_price']) ? 0 : $value['private_price']
                     ]; 
 
                     DB::table('trip_vehicle_pricing')->insert($vehicle_data);
@@ -178,7 +197,7 @@ class TripController extends Controller
         ->where('status', true)
         ->skip(0)
         ->take(15)
-        ->get();
+        ->get()->unique('from_location');
         return $trips;
     }
 
@@ -189,7 +208,7 @@ class TripController extends Controller
         ->where('status', true)
         ->skip(0)
         ->take(15)
-        ->get();
+        ->get()->unique('to_location');
         return $trips;
     }
 

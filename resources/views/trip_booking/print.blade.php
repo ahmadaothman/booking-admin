@@ -119,7 +119,7 @@
                                 Pickup Location Address:
                             </td>
                             <td colspan="3">
-                                {{ $booking_data['return_pickup_note'] }}
+                                {{ $booking_data['one_way_dropoff_note'] }}
                             </td>
                         </tr>
                         <tr>
@@ -127,7 +127,7 @@
                                 Dropoff Location Address:
                             </td>
                             <td colspan="3">
-                                {{ $booking_data['return_dropoff_note'] }}
+                                {{ $booking_data['one_way_pickup_note'] }}
                             </td>
                         </tr>
                     </tbody>

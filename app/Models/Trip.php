@@ -26,10 +26,20 @@ class Trip extends Model
          return Countries::where('cca2', $this->country)->first()->flag->emoji;
     }
 
-    public function getCountVehicleAttribute(){
-        $vehicles = DB::table('trip_vehicle_pricing')->where('trip_id', $this->id)
-            ->get();
+    public function getCountAgencyVehicleAttribute(){
+        $vehicles = DB::table('trip_vehicle_pricing')
+        ->where('trip_id', $this->id)
+        ->where('private_price', "!=",0)
+        ->get();
 
+        return $vehicles->count();
+    }
+
+    public function getCountPublicVehicleAttribute(){
+        $vehicles = DB::table('trip_vehicle_pricing')
+        ->where('trip_id', $this->id)
+        ->where('public_price', "!=",0)
+        ->get();
         return $vehicles->count();
     }
 }
