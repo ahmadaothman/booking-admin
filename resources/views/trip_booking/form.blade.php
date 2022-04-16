@@ -167,7 +167,7 @@
                 <div class="row">
                         <div class="col-md-12">
                             <div class="form-group ">
-                                <label for="fly_number" >Fly Number:</label>
+                                <label for="fly_number" >Flight Number:</label>
                                 <input type="text"  class="form-control" id="fly_number" name="fly_number" value="{{ $booking->trip_number_main }}" />
                             </div>
                         </div>
@@ -228,7 +228,7 @@
                <div class="row">
                        <div class="col-md-6">
                            <div class="form-group ">
-                               <label for="fly_number" >Fly Number:</label>
+                               <label for="fly_number" >Flight Number:</label>
                                <input type="text" readonly class="form-control" id="fly_number" name="fly_number" value="{{ $booking->trip_number_main }}" />
                            </div>
                        </div>

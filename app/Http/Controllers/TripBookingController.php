@@ -182,7 +182,7 @@ class TripBookingController extends Controller
           $data['trip_not_found'] = true;
           return view('trip_booking.print',$data);
         }
-
+    
         $data['booking_data'] = $booking_data;
         $data['booking_number'] = $booking_data->id;
         $data['from']   = $booking_data->Trip->from_location;
