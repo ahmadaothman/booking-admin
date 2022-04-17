@@ -84,7 +84,7 @@
                     <div class="col-md-12" id="airport_note_div" >
                         <div class="d-none">{{ isset($trip->airport_note) ? $airport_note = $trip->airport_note :  $airport_note = old('airport_note') }}</div>
                         <label for="airport_note">Airport Note:</label>
-                        <input type="text" class="form-control" name="airport_note" placeholder="Airport Note" id="airport_note" value="{{ $airport_note }}"/>
+                        <textarea type="text" class="form-control" name="airport_note" placeholder="Airport Note" id="airport_note" >{{ $airport_note }}</textarea>
                     </div>
                     <hr/>
                     <div class="container">
