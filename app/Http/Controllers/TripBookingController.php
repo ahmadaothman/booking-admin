@@ -111,6 +111,7 @@ class TripBookingController extends Controller
                'booking_date'  =>  $request->input('booking_date'),
                'one_way_time'  =>  $request->input('one_way_time'),
                'trip_number_main'  =>  $request->input('fly_number'),
+               'return_trip_number_main'  =>  $request->input('return_fly_number'),
                'trip_arrival_time'    =>   $request->input('fly_arrival_time'),
                'one_way_pickup_note'    => $request->input('one_way_pickup_note'),
                'one_way_dropoff_note'    => $request->input('one_way_dropoff_note'),

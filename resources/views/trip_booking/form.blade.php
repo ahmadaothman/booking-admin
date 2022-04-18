@@ -163,7 +163,8 @@
                     </div>
                 </div>
             </div>
-            @if ($one_way_trip->is_airport == 1)
+
+            @if ($booking->trip_number_main)
                 <div class="row">
                         <div class="col-md-12">
                             <div class="form-group ">
@@ -180,6 +181,7 @@
                         </div>
                 </div>
             @endif
+
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group ">
@@ -223,6 +225,24 @@
                        <input type="text" readonly class="form-control" id="return_to_location" name="return_to_location" value="{{ $round_trip->to_location }}" />
                    </div>
                </div>
+               @if ($booking->return_trip_number_main)
+               
+                        <div class="col-md-12">
+                            <div class="form-group ">
+                                <label for="fly_number" >Return Flight Number:</label>
+                                <input type="text"  class="form-control" id="return_fly_number" name="return_fly_number" value="{{ $booking->return_trip_number_main }}" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 d-none">
+                            <div class="form-group ">
+                                <label for="fly_arrival_time" >Fly Arrival Time:</label>
+                                <input type="text"  class="form-control" id="fly_arrival_time" name="fly_arrival_time" value="{{ $booking->trip_arrival_time }}" />
+                            </div>
+                        </div>
+               
+                @endif
+
            </div>
            @if ($round_trip->is_airport == 1)
                <div class="row">
