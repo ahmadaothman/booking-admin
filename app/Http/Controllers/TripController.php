@@ -44,7 +44,7 @@ class TripController extends Controller
            }
         }
 
-        $data['trips'] = $trips->paginate(50);
+        $data['trips'] = $trips->paginate(25);
 
         return view('trips.list',$data);
     }
