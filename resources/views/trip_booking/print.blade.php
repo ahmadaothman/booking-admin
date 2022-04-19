@@ -184,7 +184,7 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <td class="text-center align-middle"><h5>{{ $booking_trip->airport_note }} </h5></td>
+                            <td class="text-left align-middle"><h5>{!! nl2br(e($booking_trip->airport_note)) !!} </h5></td>
                         </tr>
                     </tbody>
                 </table>
@@ -192,7 +192,8 @@
             <table class="table table-bordered">
                 <tbody>
                     <tr>
-                        <td class="text-center align-middle"><h5>{{ $booking_return_trip->airport_note }} </h5></td>
+
+                        <td class="text-left align-middle"><h5>{!! nl2br(e($booking_return_trip->airport_note)) !!} </h5></td>
                     </tr>
                 </tbody>
             </table>
